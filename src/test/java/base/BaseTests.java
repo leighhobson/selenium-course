@@ -15,12 +15,14 @@ public class BaseTests {
         driver = new ChromeDriver();
         driver.get("https://the-internet.herokuapp.com/");
 
-        List<WebElement> links = driver.findElements(By.tagName("a"));
+        WebElement mainPageLink = driver.findElement(By.linkText("Shifting Content"));
+        mainPageLink.click();
+
+        WebElement subMenuLink = driver.findElement(By.linkText("Example 1: Menu Element"));
+        subMenuLink.click();
+
+        List<WebElement> links = driver.findElements(By.tagName("li"));
         System.out.println(links.size());
-
-        WebElement inputsLink = driver.findElement(By.linkText("Inputs"));
-        inputsLink.click();
-
         driver.quit();
     }
     public static void main(String args[]){
