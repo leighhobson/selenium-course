@@ -33,4 +33,14 @@ public class HomePage {
     private void clickLink(String linkText) {
         driver.findElement(By.linkText(linkText)).click();
     }
+
+    public KeyPressesPage clickKeyPresses(){
+        clickLink("Key Presses");
+        return new KeyPressesPage(driver);
+    }
+
+    public SliderPage clickHorizontalSlider(){
+        clickLink("Horizontal Slider");
+        return new SliderPage(driver);
+    }
 }
