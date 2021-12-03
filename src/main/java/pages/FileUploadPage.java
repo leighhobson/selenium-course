@@ -3,8 +3,6 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import javax.print.DocFlavor;
-
 public class FileUploadPage {
     private WebDriver driver;
     private By inputField = By.id("file-upload");
