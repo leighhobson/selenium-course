@@ -7,6 +7,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import pages.HomePage;
 
+import java.util.concurrent.TimeUnit;
+
 public class BaseTests {
     private WebDriver driver;
     protected HomePage homePage;
@@ -15,6 +17,9 @@ public class BaseTests {
     public void setUp(){
         System.setProperty("webdriver.chrome.driver", "resources/chromedriver.exe");
         driver = new ChromeDriver();
+        // driver.manage().timeouts().pageLoadTimeout(); //page load timeout example (Chapter 9)
+        // driver.manage().timeouts().setScriptTimeout(); //asynchronous scripts timeout example (Chapter 9)
+        // driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS); //implicit wait example (Chapter 9)
         goHome();
 
         homePage = new HomePage(driver);
