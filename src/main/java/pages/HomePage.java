@@ -3,6 +3,8 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.nio.channels.MulticastChannel;
+
 public class HomePage {
     private WebDriver driver;
 
@@ -77,5 +79,10 @@ public class HomePage {
     public InfiniteScrollPage clickInfiniteScroll(){
         clickLink("Infinite Scroll");
         return new InfiniteScrollPage(driver);
+    }
+
+    public MultipleWindowsPage clickMultipleWindows() {
+        clickLink("Multiple Windows");
+        return new MultipleWindowsPage(driver);
     }
 }
