@@ -1,10 +1,12 @@
 package base;
 
 import com.google.common.io.Files;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -26,20 +28,21 @@ public class BaseTests {
     @BeforeClass
     public void setUp(){
         System.setProperty("webdriver.chrome.driver", "resources/chromedriver.exe");
-        driver = new EventFiringWebDriver(new ChromeDriver());
-        driver.register(new EventReporter());
+        driver = new EventFiringWebDriver(new ChromeDriver(getChromeOptions()));
+    //  driver = new EventFiringWebDriver(new ChromeDriver());
     //  driver = new ChromeDriver();
+        driver.register(new EventReporter());
     //  driver.manage().timeouts().pageLoadTimeout(); //page load timeout example (Chapter 9)
     //  driver.manage().timeouts().setScriptTimeout(); //asynchronous scripts timeout example (Chapter 9)
     //  driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS); //implicit wait example (Chapter 9)
         goHome();
-
-        homePage = new HomePage(driver);
     }
 
     @BeforeMethod
     public void goHome(){
         driver.get("https://the-internet.herokuapp.com/");
+        homePage = new HomePage(driver);
+        setCookie();
     }
 
     @AfterClass
@@ -64,5 +67,20 @@ public class BaseTests {
 
     public WindowManager getWindowManager(){
         return new WindowManager(driver);
+    }
+
+    private ChromeOptions getChromeOptions(){
+        ChromeOptions options = new ChromeOptions();
+        options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"}); // disable the automation notification infobar - Chapter 14
+    //  options.addArguments("disable-infobars"); // this line is deprecated in modern Chrome versions and the one above is a workaround
+    //  options.setHeadless(true); //run test without browser window Chapter 14
+        return options;
+    }
+
+    private void setCookie(){
+        Cookie cookie = new Cookie.Builder("tau", "123")
+            .domain("the-internet.herokuapp.com")
+            .build();
+        driver.manage().addCookie(cookie);
     }
 }
